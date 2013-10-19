@@ -11,3 +11,12 @@ function utils.img_load_dir( dir )
 	end
 	return t
 end
+
+function utils.sum( t )
+	local sum = 0
+	
+	for i,e in pairs(t) do
+		sum = sum + e
+	end
+	return sum
+end

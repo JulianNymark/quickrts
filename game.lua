@@ -4,21 +4,41 @@ function game.init ()
 	if ms.isVisible() then
 		ms.setVisible(false)
 	end
-
-	p1 = Player()
+	
+	players = {}
+	players["p1"] = Player()
+	players["ai1"] = Player()
+	
 	c = Cursor()
 	mouse_timer = 0
 	mouse_prev_loc = nil
+	
+	units = {} -- don't confuse with player's units! this is unit info
+	units["test"] = { ["radius"] = 10, ["speed"] = 2}
 end
 
 function game.draw ()
+	-- draw selection circles
+	for i,p in pairs(players) do
+		for i2,u in pairs(p.selected) do
+			u:draw_selection()
+		end
+	end
+	
+	-- draw units
+	for i,p in pairs(players) do
+		for i2,u in pairs(p.units) do
+			u:draw()
+		end
+	end
+	
+	-- draw selection box
 	if c.mode == "select_box" then
 		gr.setColor(255,255,255,255)
 		gr.rectangle("line", mouse_prev_loc.x, mouse_prev_loc.y, 
 					 ms.getX() - mouse_prev_loc.x, 
 					 ms.getY() - mouse_prev_loc.y)
 	end
-
 	c:draw() -- draw cursor last
 end
 
@@ -40,17 +60,28 @@ function game.update ( dt )
 			c.mode = "single_click"
 		end
 	end
+	
+	for i,p in pairs(players) do
+		p:update( dt )
+	end
 end
 
 function game.mousepressed ( x, y, button )
+	players.p1.selected = {}
 	mouse_prev_loc = Vec( ms.getX(), ms.getY() )
 end
 
 function game.mousereleased ( x, y, button )
 	if c.mode == "select_box" then
-		
+		for i,u in pairs(players.p1.units) do
+			if u.x < x and u.x > mouse_prev_loc.x and
+				u.y < y and u.y > mouse_prev_loc.y
+			then
+				table.insert(players.p1.selected, u)
+			end
+		end
 	elseif c.mode == "single_click" then
-			
+		
 	end
 	
 	c.mode = "normal"
@@ -63,5 +94,11 @@ function game.keypressed ( key )
 	end
 	if key == "a" then
 		c.select_img = "red"
+	end
+	if key == " " then
+		u = Unit(math.random(10,gr.getWidth()-10),
+				 math.random(10,gr.getHeight()-10),
+				 "test")
+		table.insert(players.p1.units, u)
 	end
 end
