@@ -12,4 +12,9 @@ end
 function Player:update ( dt )
 	self.score = #self.units + #self.structures + self.supply +
 		(utils.sum(self.resources) / 50)
+	
+	-- update units (movement...)
+	for i,u in pairs(self.units) do
+		u:update( dt )
+	end
 end

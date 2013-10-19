@@ -14,11 +14,12 @@ timer = love.timer
 
 Class = require "class"
 Vec = require "vector"
-require "player"
 require "game"
+require "unit"
+
+require "player"
 require "cursor"
 require "utils"
 require "map"
 require "selectable"
-require "unit"
 require "structure"
