@@ -14,7 +14,7 @@ function game.init ()
 	mouse_prev_loc = nil
 	
 	units = {} -- don't confuse with player's units! this is unit info
-	units["test"] = { ["radius"] = 10, ["speed"] = 50 }
+	units["test"] = { radius = 10, speed = 50, health = 10, armor = 0}
 end
 
 function game.draw ()
@@ -99,6 +99,7 @@ function game.mousereleased ( x, y, button )
 		for i,u in pairs(players.p1.units) do
 			if click_vec:dist(u.loc) < u.radius	then
 				table.insert(players.p1.selected, u)
+				break
 			end
 		end
 	end
