@@ -14,7 +14,9 @@ function game.init ()
 	mouse_prev_loc = nil
 	
 	units = {} -- don't confuse with player's units! this is unit info
-	units["test"] = { radius = 10, speed = 50, health = 10, armor = 0}
+	units["test"] = { radius = 10, speed = 50, health = 10, armor = 0 }
+	units_img = {} -- the image data for all the units
+	units_img["test"] = utils.img_load_dir("assets/arrow")
 end
 
 function game.draw ()

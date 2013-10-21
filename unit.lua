@@ -8,12 +8,36 @@ function Unit:init( x, y, id )
 	self.radius = units[self.id].radius
 	self.speed = units[self.id].speed
 	self.destination = nil
-	self.direction = Vec(0,1) -- south
+	self.dir = Vec(0,1) -- south
 end
 
 function Unit:draw()
-	gr.setColor(100,100,100,255)
-	gr.circle("fill", self.loc.x, self.loc.y, self.radius, 10)
+	--gr.setColor(100,100,100,255)
+	--gr.circle("fill", self.loc.x, self.loc.y, self.radius, 10)
+
+	gr.setColor(255,255,255,255)
+	local angle = math.atan2(self.dir.y, self.dir.x)
+	local angle = angle*(180/math.pi)
+	local dir_img = nil
+
+	if angle <= -157.5 then
+		dir_img = "west"
+	elseif angle <= -112.5 then
+		dir_img = "northwest"
+	elseif angle <= -67.5 then
+		dir_img = "north"
+	elseif angle <= -22.5 then
+		dir_img = "northeast"
+	elseif angle <= 22.5 then
+		dir_img = "east"
+	elseif angle <= 67.5 then
+		dir_img = "southeast"
+	elseif angle <= 112.5 then
+		dir_img = "south"
+	else
+		dir_img = "southwest"
+	end
+	gr.draw(units_img[self.id][dir_img], self.loc.x - 16, self.loc.y - 16)	
 end
 
 function Unit:draw_selection()
@@ -24,9 +48,9 @@ end
 
 function Unit:update( dt )
 	if self.destination then
-		self.direction = self.destination - self.loc
-		self.direction = self.direction:normalized()
-		self.loc = self.loc + (self.direction*self.speed)*dt
+		self.dir = self.destination - self.loc
+		self.dir = self.dir:normalized()
+		self.loc = self.loc + (self.dir*self.speed)*dt
 		
 		if self.loc:dist(self.destination) < 1 then
 			self.destination = nil

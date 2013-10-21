@@ -14,6 +14,7 @@ timer = love.timer
 
 Class = require "class"
 Vec = require "vector"
+anim8 = require "anim8"
 require "game"
 require "unit"
 
