@@ -122,7 +122,7 @@ function game.keypressed ( key )
 		c.select_img = "red"
 	end
 	if key == " " then
-		for i=0,10 do
+		for i=0,9 do
 			u = Unit(math.random(10,gr.getWidth()-10),
 					 math.random(10,gr.getHeight()-10),
 					 "test")
