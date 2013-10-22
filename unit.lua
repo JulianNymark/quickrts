@@ -12,14 +12,11 @@ function Unit:init( x, y, id )
 end
 
 function Unit:draw()
-	--gr.setColor(100,100,100,255)
-	--gr.circle("fill", self.loc.x, self.loc.y, self.radius, 10)
-
 	gr.setColor(255,255,255,255)
 	local angle = math.atan2(self.dir.y, self.dir.x)
 	local angle = angle*(180/math.pi)
 	local dir_img = nil
-
+	
 	if angle <= -157.5 then
 		dir_img = "west"
 	elseif angle <= -112.5 then
@@ -34,9 +31,12 @@ function Unit:draw()
 		dir_img = "southeast"
 	elseif angle <= 112.5 then
 		dir_img = "south"
-	else
+	elseif angle <= 157.5 then
 		dir_img = "southwest"
+	else
+		dir_img = "west"
 	end
+	-- add potential offsets to x and y here, based on size off sprite
 	gr.draw(units_img[self.id][dir_img], self.loc.x - 16, self.loc.y - 16)	
 end
 

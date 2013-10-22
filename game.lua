@@ -47,6 +47,10 @@ function game.draw ()
 					 ms.getY() - mouse_prev_loc.y)
 	end
 	c:draw() -- draw cursor last
+
+	--draw some debug info stuff
+	gr.print("fps: " .. timer.getFPS() ,10, gr.getHeight() - 20)
+	gr.print("units: " .. #players.p1.units ,10, gr.getHeight() - 40)
 end
 
 function game.update ( dt )
@@ -118,9 +122,11 @@ function game.keypressed ( key )
 		c.select_img = "red"
 	end
 	if key == " " then
-		u = Unit(math.random(10,gr.getWidth()-10),
-				 math.random(10,gr.getHeight()-10),
-				 "test")
-		table.insert(players.p1.units, u)
+		for i=0,10 do
+			u = Unit(math.random(10,gr.getWidth()-10),
+					 math.random(10,gr.getHeight()-10),
+					 "test")
+			table.insert(players.p1.units, u)
+		end
 	end
 end
